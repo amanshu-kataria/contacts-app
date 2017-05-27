@@ -26,11 +26,11 @@ class SideBar extends React.Component{
   render(){
     return(
       <ul className="sideMenu">
-      <li><FlatButton label="All Contacts" primary={true} fullWidth={true} style={style} /></li>
-      <li><FlatButton label="Frequently Contacted" primary={true} fullWidth={true} style={style} /></li>
-      <li><FlatButton label="Groups" primary={true} fullWidth={true} style={style} /></li>
-      <li><FlatButton label="Settings" primary={true} fullWidth={true} style={style} /></li>
-        <li><FlatButton label="Help" primary={true} fullWidth={true} style={style} /></li>
+      <li><FlatButton label="All Contacts" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
+      <li><FlatButton label="Frequently Contacted" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
+      <li><FlatButton label="Groups" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
+      <li><FlatButton label="Settings" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
+        <li><FlatButton label="Help" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
       </ul>
     );
   }
