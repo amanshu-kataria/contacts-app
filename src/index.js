@@ -4,6 +4,8 @@ import './index.css';
 import FlatButton from 'material-ui/FlatButton';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 function NavBar(){
   return(
@@ -14,7 +16,7 @@ function NavBar(){
 const style={
   borderBottom: '1px solid gray',
   textAlign: 'left',
-  paddingLeft: '20px'
+  paddingLeft: '20px',
 };
 
 class SideBar extends React.Component{
@@ -38,6 +40,15 @@ SideBar.childContextTypes = {
             muiTheme: React.PropTypes.object.isRequired,
 };
 
+class Contacts extends React.Component{
+  render(){
+    return(
+      <div className="contact">
+      </div>
+    );
+  }
+}
+
 class Main extends React.Component{
   render(){
     return(
@@ -45,8 +56,13 @@ class Main extends React.Component{
         <div className="navBar">
           <NavBar />
         </div>
-        <div className="sideBar">
-          <SideBar />
+        <div>
+          <div className="sideBar">
+            <SideBar />
+          </div>
+          <div className="contactsList">
+            <Contacts />
+          </div>
         </div>
       </div>
     );
