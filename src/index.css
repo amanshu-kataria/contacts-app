@@ -27,8 +27,11 @@ body {
   color: white;
 }
 
-.sideBar{
+.sideBar, .contactsList{
+  font-family: 'Inconsolata', monospace;
   overflow: auto;
+  display: inline-block;
+  float: left;
   position: relative;
   top: 60px;
   height: 500px;
@@ -42,4 +45,22 @@ body {
 .sideMenu{
   list-style: none;
   padding-top: 20px;
+}
+
+.contactsList{
+  width: 1000px;
+  border-right: 1px solid black;
+}
+
+.contact{
+  background-color: white;
+  max-width: 100%;
+  height: 35px;
+  margin: 3px 10px 3px 10px;
+  border: 1px solid #BDBDBD;
+
+}
+
+.contact:first-child{
+  margin-top: 30px;
 }
