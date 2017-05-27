@@ -1,5 +1,19 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Inconsolata', monospace;
+}
+
+.navBar{
+  height: 60px;
+  max-width: 100%;
+  background-color: #00B8D4;
+  overflow: auto;
+}
+
+.navTitle{
+  position: absolute;
+  left: 20px;
+  color: white;
 }
