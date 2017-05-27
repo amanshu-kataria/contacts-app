@@ -18,3 +18,17 @@ body {
   left: 20px;
   color: white;
 }
+
+.sideBar{
+  overflow: auto;
+  position: relative;
+  top: 60px;
+  max-width: 250px;
+  height: 500px;
+  border-right: 1px solid black;
+}
+
+.sideMenu{
+  list-style: none;
+  padding-top: 20px;
+}
