@@ -49,6 +49,16 @@ class Contacts extends React.Component{
   }
 }
 
+class AddContact extends React.Component{
+    render(){
+      return(
+        <FloatingActionButton id="addContactId" className="AddContactButton">
+          <ContentAdd />
+        </FloatingActionButton>
+      );
+    }
+}
+
 class Main extends React.Component{
   render(){
     return(
@@ -57,14 +67,21 @@ class Main extends React.Component{
           <NavBar />
         </div>
         <div>
-          <div className="sideBar">
-            <SideBar />
+          <div className="navBar">
+            <NavBar />
           </div>
-          <div className="contactsList">
-            <Contacts />
+          <div>
+            <div className="sideBar">
+              <SideBar />
+            </div>
+            <div className="contactsList">
+              <Contacts />
+            </div>
+          </div>
+          <div>
+            <AddContact />
           </div>
         </div>
-      </div>
     );
   }
 }

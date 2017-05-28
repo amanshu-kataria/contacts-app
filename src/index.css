@@ -64,3 +64,9 @@ body {
 .contact:first-child{
   margin-top: 30px;
 }
+
+.AddContactButton{
+  position: fixed;
+  bottom: 40px;
+  right: 100px;
+}
