@@ -10,6 +10,14 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 function NavBar(){
   return(
@@ -17,21 +25,20 @@ function NavBar(){
   );
 }
 
-const style={
-
-  textAlign: 'left',
-  paddingLeft: '20px',
-};
-
-const dividerStyle={
-  marginLeft: "0px"
-};
-
 class SideBar extends React.Component{
   getChildContext() {
    return { muiTheme: getMuiTheme(baseTheme) };
  }
   render(){
+    const dividerStyle={
+      marginLeft: "0px"
+    };
+
+    const style={
+      textAlign: 'left',
+      paddingLeft: '20px',
+    };
+
     return(
       <ul className="sideMenu">
         <li><FlatButton label="All Contacts" primary={true} fullWidth={true} labelStyle={{textTransform: 'capitalize'}} style={style} /></li>
@@ -53,32 +60,14 @@ SideBar.childContextTypes = {
             muiTheme: React.PropTypes.object.isRequired
 };
 
-class Contacts extends React.Component{
-  render(){
-    return(
-      <div className="contact">
-      </div>
-    );
-  }
-}
-
 class ModalForm extends React.Component{
-  constructor() {
-    super();
-    this.state={
-      name: "",
-      company: "",
-      jobTitle: "",
-      email: "",
-      phone: ""
-    };
+  constructor(props) {
+    super(props);
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e){
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    this.props.contactData.onValueChange(e.target.value);
   }
 
   render(){
@@ -87,24 +76,27 @@ class ModalForm extends React.Component{
       marginLeft: "10px"
     };
 
+    const targetProp=this.props.contactData;
     return(
       <div>
-        <TextField name="name" type="text" hintText="Name" value={this.state.name} onChange={this.handleChange} style={formStyle}/><br />
-        <TextField name="company" type="text" hintText="Company" value={this.state.company} onChange={this.handleChange} style={{width: '40%', marginLeft: "10px"}}/>
-        <TextField name="jobTitle" type="text" hintText="Job Title" value={this.state.jobTitle} onChange={this.handleChange} style={{width: '40%', marginLeft: "10px"}} /><br />
-        <TextField name="email" type="email" hintText="Email" value={this.state.email} onChange={this.handleChange} style={formStyle} /><br />
-        <TextField name="phone" type="number" hintText="Phone" value={this.state.phone} onChange={this.handleChange} style={formStyle} /><br />
+        <TextField name="name" type="text" hintText="Name" value={targetProp.name} onChange={this.handleChange} style={formStyle}/><br />
+        <TextField name="company" type="text" hintText="Company" value={targetProp.company} onChange={this.handleChange} style={formStyle}/><br />
+        <TextField name="email" type="email" hintText="Email" value={targetProp.email} onChange={this.handleChange} style={formStyle} /><br />
+        <TextField name="phone" type="number" hintText="Phone" value={targetProp.phone} onChange={this.handleChange} style={formStyle} /><br />
       </div>
     );
   }
-
 }
 
 class AddContact extends React.Component{
-    state = {
-      open: false,
-    };
-
+  constructor(props){
+    super(props);
+      this.state = {
+        open: false,
+      };
+      this.handleOpen=this.handleOpen.bind(this);
+      this.handleClose=this.handleClose.bind(this);
+    }
     handleOpen=()=>{
       this.setState({open: true});
     };
@@ -142,14 +134,61 @@ class AddContact extends React.Component{
             modal={true}
             titleStyle={titleStyle}
             open={this.state.open} >
-              <ModalForm />
+              <ModalForm contactData={this.props}/>
             </Dialog>
         </div>
       );
     }
 }
 
+class Contacts extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      rows: []
+    };
+    this.addRow=this.addRow.bind(this);
+  }
+  addRow() {
+       var nextState = this.state;
+       nextState.rows.push(this.props.name,this.props.email,this.props.phone,this.props.company);
+       this.setState(nextState);
+   }
+
+  render(){
+    return(
+      <Table className="contact">
+        <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Email</TableHeaderColumn>
+            <TableHeaderColumn>Phone</TableHeaderColumn>
+            <TableHeaderColumn>Company</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+        </TableBody>
+      </Table>
+    );
+  }
+}
+
 class Main extends React.Component{
+  constructor(){
+    super();
+    this.state={
+      name:"",
+      company:"",
+      email:"",
+      phone:""
+    };
+  }
+
+
+  handleChange(e){
+    this.setState();
+  }
+
   render(){
     return(
       <MuiThemeProvider>
@@ -166,7 +205,7 @@ class Main extends React.Component{
             </div>
           </div>
           <div>
-            <AddContact />
+            <AddContact onValueChange={this.handleChange} name={this.state.name} company={this.state.company} email={this.state.email} phone={this.state.phone}/>
           </div>
         </div>
       </MuiThemeProvider>
