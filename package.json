@@ -5,7 +5,9 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
-  },
+  }
+  ,
+  "homepage": "https://amanshu-kataria.github.io/contacts-app",
   "devDependencies": {
     "react-scripts": "1.0.6"
   },
