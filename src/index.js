@@ -8,6 +8,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
+import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
 
 function NavBar(){
   return(
@@ -60,80 +62,92 @@ class Contacts extends React.Component{
   }
 }
 
+class ModalForm extends React.Component{
+  constructor() {
+    super();
+    this.state={
+      name: "",
+      company: "",
+      jobTitle: "",
+      email: "",
+      phone: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e){
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  render(){
+    const formStyle={
+      width: '82%',
+      marginLeft: "10px"
+    };
+
+    return(
+      <div>
+        <TextField name="name" type="text" hintText="Name" value={this.state.name} onChange={this.handleChange} style={formStyle}/><br />
+        <TextField name="company" type="text" hintText="Company" value={this.state.company} onChange={this.handleChange} style={{width: '40%', marginLeft: "10px"}}/>
+        <TextField name="jobTitle" type="text" hintText="Job Title" value={this.state.jobTitle} onChange={this.handleChange} style={{width: '40%', marginLeft: "10px"}} /><br />
+        <TextField name="email" type="email" hintText="Email" value={this.state.email} onChange={this.handleChange} style={formStyle} /><br />
+        <TextField name="phone" type="number" hintText="Phone" value={this.state.phone} onChange={this.handleChange} style={formStyle} /><br />
+      </div>
+    );
+  }
+
+}
+
 class AddContact extends React.Component{
-    constructor(props) {
-      super(props)
-      this.state = { isModalOpen: true }
-    }
+    state = {
+      open: false,
+    };
+
+    handleOpen=()=>{
+      this.setState({open: true});
+    };
+
+    handleClose=()=>{
+      this.setState({open: false});
+    };
+
     render(){
+      const titleStyle={
+        backgroundColor: '#EEEEEE'
+      };
+
+      const actions = [
+        <FlatButton
+          label="Cancel"
+          primary={true}
+          onClick={this.handleClose}
+        />,
+        <FlatButton
+          label="Save"
+          primary={true}
+          disabled={true}
+          onClick={this.handleClose}
+        />,
+      ];
       return(
         <div>
-          <FloatingActionButton id="addContactId" className="AddContactButton" onClick={()=>this.openModal()}>
+          <FloatingActionButton id="addContactId" className="AddContactButton" onClick={this.handleOpen}>
             <ContentAdd />
           </FloatingActionButton>
-          <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
-            <h1>Modal title</h1>
-            <p>hello</p>
-            <p><button onClick={() => this.closeModal()}>Close</button></p>
-          </Modal>
+          <Dialog
+            title="Create contact"
+            actions={actions}
+            modal={true}
+            titleStyle={titleStyle}
+            open={this.state.open} >
+              <ModalForm />
+            </Dialog>
         </div>
       );
     }
-    openModal() {
-      this.setState({ isModalOpen: true })
-    }
-
-    closeModal() {
-      this.setState({ isModalOpen: false })
-    }
 }
-
-  class Modal extends React.Component {
-    render() {
-      if (this.props.isOpen === false)
-        return null;
-
-      let modalStyle = {
-        width: '300px',
-        height: '300px',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: '9999',
-        background: '#fff'
-      }
-
-      let backdropStyle = {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        top: '0px',
-        left: '0px',
-        zIndex: '9998',
-        background: 'rgba(0, 0, 0, 0.3)'
-      }
-
-      return (
-        <div className={this.props.containerClassName}>
-          <div className={this.props.className} style={modalStyle}>
-            {this.props.children}
-          </div>
-          {!this.props.noBackdrop &&
-              <div className={this.props.backdropClassName} style={backdropStyle}
-                   onClick={e => this.close(e)}/>}
-        </div>
-      )
-    }
-
-    close(e) {
-      e.preventDefault()
-
-      if (this.props.onClose) {
-        this.props.onClose()
-      }
-    }
-  }
 
 class Main extends React.Component{
   render(){
