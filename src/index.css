@@ -39,7 +39,7 @@ body {
 
 .sideBar{
     max-width: 250px;
-    border-right: 1px solid black;
+    border-right: 1px solid #BDBDBD;
 }
 
 .sideMenu{
@@ -49,7 +49,8 @@ body {
 
 .contactsList{
   width: 1000px;
-  border-right: 1px solid black;
+  border-right: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
 }
 
 .contact{
@@ -58,7 +59,6 @@ body {
   height: 35px;
   margin: 3px 10px 3px 10px;
   border: 1px solid #BDBDBD;
-
 }
 
 .contact:first-child{
