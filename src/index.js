@@ -176,9 +176,15 @@ class Contacts extends React.Component{
   }
 
   addRow() {
-       var nextState = this.state;
+    return (<TableRow>
+            <TableRowColumn>{this.props.name}</TableRowColumn>
+            <TableRowColumn>{this.props.email}</TableRowColumn>
+            <TableRowColumn>{this.props.phone}</TableRowColumn>
+            <TableRowColumn>{this.props.company}</TableRowColumn>
+            </TableRow>);
+       /*var nextState = this.state;
        nextState.rows.push(this.props.name,this.props.email,this.props.phone,this.props.company);
-       this.setState(nextState);
+       this.setState(nextState);*/
    }
 
   render(){
@@ -193,12 +199,7 @@ class Contacts extends React.Component{
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableRowColumn>{this.props.name}</TableRowColumn>
-            <TableRowColumn>{this.props.email}</TableRowColumn>
-            <TableRowColumn>{this.props.phone}</TableRowColumn>
-            <TableRowColumn>{this.props.company}</TableRowColumn>
-          </TableRow>
+          {this.addRow()}
         </TableBody>
       </Table>
     );
