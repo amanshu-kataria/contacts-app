@@ -173,18 +173,22 @@ class Contacts extends React.Component{
       rows: []
     };
     this.addRow=this.addRow.bind(this);
+    if(this.props.name!==""){
+      var nextState = this.state.rows;
+      nextState.push([this.props.name,this.props.email,this.props.phone,this.props.company]);
+      this.setState(nextState);
+    }
   }
 
   addRow() {
+    return this.state.rows.map((el) => {
     return (<TableRow>
-            <TableRowColumn>{this.props.name}</TableRowColumn>
-            <TableRowColumn>{this.props.email}</TableRowColumn>
-            <TableRowColumn>{this.props.phone}</TableRowColumn>
-            <TableRowColumn>{this.props.company}</TableRowColumn>
-            </TableRow>);
-       /*var nextState = this.state;
-       nextState.rows.push(this.props.name,this.props.email,this.props.phone,this.props.company);
-       this.setState(nextState);*/
+              <TableRowColumn>{el[0]}</TableRowColumn>
+              <TableRowColumn>{el[1]}</TableRowColumn>
+              <TableRowColumn>{el[2]}</TableRowColumn>
+              <TableRowColumn>{el[3]}</TableRowColumn>
+          </TableRow>)
+    });
    }
 
   render(){
