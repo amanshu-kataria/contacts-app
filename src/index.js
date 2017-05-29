@@ -67,7 +67,8 @@ class ModalForm extends React.Component{
   }
 
   handleChange(e){
-    this.props.contactData.onValueChange(e.target.value);
+    const target=e.target;
+    this.props.contactData.onValueChange(target.name,target.value);
   }
 
   render(){
@@ -110,6 +111,8 @@ class AddContact extends React.Component{
         backgroundColor: '#EEEEEE'
       };
 
+      const isSaveEnabled=this.props.name && this.props.email &&this.props.phone && this.props.phone;
+
       const actions = [
         <FlatButton
           label="Cancel"
@@ -119,7 +122,7 @@ class AddContact extends React.Component{
         <FlatButton
           label="Save"
           primary={true}
-          disabled={true}
+          disabled={!isSaveEnabled}
           onClick={this.handleClose}
         />,
       ];
@@ -134,7 +137,7 @@ class AddContact extends React.Component{
             modal={true}
             titleStyle={titleStyle}
             open={this.state.open} >
-              <ModalForm contactData={this.props}/>
+              <ModalForm contactData={this.props} />
             </Dialog>
         </div>
       );
@@ -182,11 +185,11 @@ class Main extends React.Component{
       email:"",
       phone:""
     };
+    this.handleChange=this.handleChange.bind(this);
   }
 
-
-  handleChange(e){
-    this.setState();
+  handleChange(name,value){
+    this.setState({[name]: value});
   }
 
   render(){
