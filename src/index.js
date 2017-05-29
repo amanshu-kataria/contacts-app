@@ -68,7 +68,7 @@ class ModalForm extends React.Component{
 
   handleChange(e){
     const target=e.target;
-    this.props.contactData.onValueChange(target.name,target.value);
+    this.props.onValueChange(target.name,target.value);
   }
 
   render(){
@@ -77,7 +77,7 @@ class ModalForm extends React.Component{
       marginLeft: "10px"
     };
 
-    const targetProp=this.props.contactData;
+    const targetProp=this.props;
     return(
       <div>
         <TextField name="name" type="text" hintText="Name" value={targetProp.name} onChange={this.handleChange} style={formStyle}/><br />
@@ -94,10 +94,21 @@ class AddContact extends React.Component{
     super(props);
       this.state = {
         open: false,
+        name:"",
+        email:"",
+        phone:"",
+        company:""
       };
       this.handleOpen=this.handleOpen.bind(this);
       this.handleClose=this.handleClose.bind(this);
+      this.handleChange=this.handleChange.bind(this);
+      this.onSave=this.onSave.bind(this);
     }
+
+    handleChange(name,value){
+      this.setState({[name]: value});
+    }
+
     handleOpen=()=>{
       this.setState({open: true});
     };
@@ -106,12 +117,23 @@ class AddContact extends React.Component{
       this.setState({open: false});
     };
 
+    onSave=()=>{
+      this.props.onValueChange(this.state.name,this.state.email,this.state.company,this.state.phone);
+      this.setState({
+        open: false,
+        name: "",
+        email: "",
+        phone: "",
+        company: ""
+      });
+    };
+
     render(){
       const titleStyle={
         backgroundColor: '#EEEEEE'
       };
 
-      const isSaveEnabled=this.props.name && this.props.email &&this.props.phone && this.props.phone;
+      const isSaveEnabled=this.state.name && this.state.email &&this.state.phone && this.state.phone;
 
       const actions = [
         <FlatButton
@@ -123,7 +145,7 @@ class AddContact extends React.Component{
           label="Save"
           primary={true}
           disabled={!isSaveEnabled}
-          onClick={this.handleClose}
+          onClick={this.onSave}
         />,
       ];
       return(
@@ -137,7 +159,7 @@ class AddContact extends React.Component{
             modal={true}
             titleStyle={titleStyle}
             open={this.state.open} >
-              <ModalForm contactData={this.props} />
+              <ModalForm onValueChange={this.handleChange} name={this.state.name} company={this.state.company} email={this.state.email} phone={this.state.phone} />
             </Dialog>
         </div>
       );
@@ -152,6 +174,7 @@ class Contacts extends React.Component{
     };
     this.addRow=this.addRow.bind(this);
   }
+
   addRow() {
        var nextState = this.state;
        nextState.rows.push(this.props.name,this.props.email,this.props.phone,this.props.company);
@@ -170,6 +193,12 @@ class Contacts extends React.Component{
           </TableRow>
         </TableHeader>
         <TableBody>
+          <TableRow>
+            <TableRowColumn>{this.props.name}</TableRowColumn>
+            <TableRowColumn>{this.props.email}</TableRowColumn>
+            <TableRowColumn>{this.props.phone}</TableRowColumn>
+            <TableRowColumn>{this.props.company}</TableRowColumn>
+          </TableRow>
         </TableBody>
       </Table>
     );
@@ -188,8 +217,8 @@ class Main extends React.Component{
     this.handleChange=this.handleChange.bind(this);
   }
 
-  handleChange(name,value){
-    this.setState({[name]: value});
+  handleChange(name,email,company,phone){
+    this.setState({name,email,company,phone});
   }
 
   render(){
@@ -204,7 +233,7 @@ class Main extends React.Component{
               <SideBar />
             </div>
             <div className="contactsList">
-              <Contacts />
+              <Contacts name={this.state.name} company={this.state.company} email={this.state.email} phone={this.state.phone}/>
             </div>
           </div>
           <div>
