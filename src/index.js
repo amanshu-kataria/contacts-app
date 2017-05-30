@@ -172,29 +172,35 @@ class Contacts extends React.Component{
     this.state={
       rows: []
     };
-    this.addRow=this.addRow.bind(this);
-    if(this.props.name!==""){
-      var nextState = this.state.rows;
-      nextState.push([this.props.name,this.props.email,this.props.phone,this.props.company]);
-      this.setState(nextState);
-    }
   }
 
+  _addRow(nextProp){
+     var rows = this.state.rows.slice();
+     rows.push([nextProp.name, nextProp.email, nextProp.phone, nextProp.company]);
+     this.setState({rows});
+ }
+
+ componentWillReceiveProps(nextProp){
+    if(nextProp.name != this.props.name && nextProp.name != '')
+       this._addRow(nextProp);
+ }
+
   addRow() {
-    return this.state.rows.map((el) => {
-    return (<TableRow>
+    return this.state.rows.map((el,i) => {
+    return (<TableRow key={i}>
               <TableRowColumn>{el[0]}</TableRowColumn>
               <TableRowColumn>{el[1]}</TableRowColumn>
               <TableRowColumn>{el[2]}</TableRowColumn>
               <TableRowColumn>{el[3]}</TableRowColumn>
-          </TableRow>)
+          </TableRow>
+        );
     });
    }
 
   render(){
     return(
       <Table className="contact">
-        <TableHeader>
+        <TableHeader displaySelectAll={false}>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
             <TableHeaderColumn>Email</TableHeaderColumn>
