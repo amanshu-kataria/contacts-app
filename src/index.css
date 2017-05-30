@@ -50,6 +50,7 @@ body {
 
 .contactsList{
   width: 1000px;
+  padding: 10px;
   border-right: 1px solid #BDBDBD;
   border-bottom: 1px solid #BDBDBD;
 }
