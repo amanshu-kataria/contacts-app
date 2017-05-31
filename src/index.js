@@ -181,10 +181,9 @@ class Contacts extends React.Component{
  }
 
  componentWillReceiveProps(nextProp){
-    if(nextProp.name != this.props.name && nextProp.name != '')
+    if(nextProp.name !== '')
        this._addRow(nextProp);
  }
-
   addRow() {
     return this.state.rows.map((el,i) => {
     return (<TableRow key={i}>
